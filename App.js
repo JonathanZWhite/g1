@@ -1,16 +1,17 @@
-import * as React from 'react';
-import AppLoading from 'expo-app-loading';
+import * as React from "react";
+import AppLoading from "expo-app-loading";
 import {
   SafeAreaProvider,
   initialWindowMetrics,
-} from 'react-native-safe-area-context';
-import { Provider as ThemeProvider } from '@draftbit/ui';
-import { QueryClient, QueryClientProvider } from 'react-query';
+} from "react-native-safe-area-context";
+import { Provider as ThemeProvider } from "@draftbit/ui";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
-import AppNavigator from './AppNavigator';
-import DraftbitTheme from './themes/DraftbitTheme.js';
-import cacheAssetsAsync from './config/cacheAssetsAsync';
-import { GlobalVariableProvider } from './config/GlobalVariableContext';
+import AppNavigator from "./AppNavigator";
+import DraftbitTheme from "./themes/DraftbitTheme.js";
+import cacheAssetsAsync from "./config/cacheAssetsAsync";
+import { GlobalVariableProvider } from "./config/GlobalVariableContext";
 
 const queryClient = new QueryClient();
 
@@ -33,7 +34,12 @@ const App = () => {
       <GlobalVariableProvider>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={DraftbitTheme}>
-            <AppNavigator />
+            <StripeProvider
+              publishableKey={"pk_test_Pw5bYnKYO43nNN0x7J9wBBMC00aQZn1GRW"}
+              merchantIdentifier="merchant.identifier"
+            >
+              <AppNavigator />
+            </StripeProvider>
           </ThemeProvider>
         </QueryClientProvider>
       </GlobalVariableProvider>
